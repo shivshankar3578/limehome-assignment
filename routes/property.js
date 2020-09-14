@@ -6,7 +6,7 @@ const BookingModel = mongoose.model("Booking");
 
 /* GET properties listing. */
 router.get('/properties', function (req, res, next) {
-  const point = req.query.at ? req.query.at.split(",").map(item=>Number(item)) : [];
+  const point = req.query.at ? req.query.at.split(",").map(item => Number(item)) : [];
   PropertyModel.aggregate([
     {
       $geoNear: {
@@ -16,13 +16,13 @@ router.get('/properties', function (req, res, next) {
         },
         spherical: true,
         distanceField: 'dist',
-        distanceMultiplier: 0.000621371,
-        maxDistance: 2
+        maxDistance: 1000 // meters
       }
     },
     {
       $project: {
         name: 1,
+        dist:1
       }
     }
   ]).exec((err, results) => {
@@ -39,11 +39,11 @@ router.post('/property/:propertyID/booking', function (req, res, next) {
       bookings: booking
     }
   },
-  {
-    upsert: false,
-    new: true
+    {
+      upsert: false,
+      new: true
 
-  }, (err, results) => {
+    }, (err, results) => {
       if (err) return next(err);
       res.status(200).json(results);
     })
@@ -51,11 +51,13 @@ router.post('/property/:propertyID/booking', function (req, res, next) {
 
 /* get booking of property */
 router.get('/property/:propertyID/bookings', function (req, res, next) {
-  PropertyModel.findById(req.params.propertyID, (err, results) => {
-    if (err) return next(err);
-    if (!results) return next(Error("property not found"))
-    res.status(200).json(results.bookings);
-  })
+  PropertyModel.findById(req.params.propertyID)
+    .populate('bookings.accountID')
+    .exec((err, results) => {
+      if (err) return next(err);
+      if (!results) return next(Error("property not found"))
+      res.status(200).json(results.bookings);
+    })
 })
 
 module.exports = router;
