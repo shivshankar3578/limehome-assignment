@@ -1,0 +1,98 @@
+{
+	"info": {
+		"_postman_id": "56c53b0d-47ab-4866-a768-7fee4bf62ecb",
+		"name": "limehome",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get properties",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/properties?at=48.130811,11.575934",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"properties"
+					],
+					"query": [
+						{
+							"key": "at",
+							"value": "48.130811,11.575934"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add booking",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"accountID\":\"5f5f38b4d6ebe65b5d0abfb1\",\n\t\"schedule\": {\n\t\t\"from\":\"2020-05-18\",\n\t\t\"to\": \"2020-05-20\"\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/property/5f5f393bd6ebe65b5d0afc20/booking",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"property",
+						"5f5f393bd6ebe65b5d0afc20",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get bookings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/property/5f5f393bd6ebe65b5d0afc20/bookings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"property",
+						"5f5f393bd6ebe65b5d0afc20",
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
